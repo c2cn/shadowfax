@@ -3,6 +3,7 @@
 namespace HuangYi\Shadowfax\Laravel;
 
 use Illuminate\Redis\RedisManager as LaravelRedisManager;
+use Laravel\Lumen\Application as Lumen;
 
 class RedisManager extends LaravelRedisManager
 {
@@ -19,7 +20,9 @@ class RedisManager extends LaravelRedisManager
      */
     public function __construct($app, $driver, array $config, array $poolsConfig = [])
     {
-        if (version_compare($app->version(), '5.7', '<')) {
+        $version = $this->getFrameworkVersion($app);
+
+        if (version_compare($version, '5.7', '<')) {
             parent::__construct($driver, $config);
         } else {
             parent::__construct($app, $driver, $config);
@@ -69,5 +72,24 @@ class RedisManager extends LaravelRedisManager
     protected function getConnectionKeyInContext($name)
     {
         return 'redis.connections.'.$name;
+    }
+
+    /**
+     * Get the Laravel framework version.
+     *
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @return string
+     */
+    protected function getFrameworkVersion($app)
+    {
+        $version = $app->version();
+
+        if ($app instanceof Lumen) {
+            preg_match('/(?<=\()[^)]+/', $version, $result);
+
+            $version = $result[0];
+        }
+
+        return $version;
     }
 }

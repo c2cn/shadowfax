@@ -1,10 +1,39 @@
 # Release Notes
 
+
+## v2.10.4
+
+### Added
+
+- Support PHP 8
+
+
+## v2.10.3
+
+### Fixed
+
+- Fix redis service not being overridden
+
+
+## v2.10.2
+
+### Fixed
+
+- Fix version comparison in Lumen
+
+
+## v2.10.1
+
+### Fixed
+
+- Support Laravel 8
+
+
 ## v2.10.0
 
 ### Added
 
-- Add a artisan command `shadowfax:task` to create task class
+- Add an artisan command `shadowfax:task` to create task class
 
 
 ## v2.9.1
